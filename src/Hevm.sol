@@ -16,14 +16,30 @@ interface IHevm {
     function addr(uint256) external returns (address);
     // Performs a foreign function call via terminal, (stringInputs) => (result)
     function ffi(string[] calldata) external returns (bytes memory);
-    // Calls another contract with a specified `msg.sender`, (newSender, contract, input) => (success, returnData)
-    function prank(address, address, bytes calldata) external payable returns (bool, bytes memory);
+    // Performs the next smart contract call with specified `msg.sender`, (newSender)
+    function prank(address) external;
+    // Performs all the following smart contract calls with specified `msg.sender`, (newSender)
+    function startPrank(address) external;
+    // Stop smart contract calls using the specified address with prankStart()
+    function stopPrank() external;
     // Sets an address' balance, (who, newBalance)
     function deal(address, uint256) external;
     // Sets an address' code, (who, newCode)
     function etch(address, bytes calldata) external;
     // Expects an error on next call
     function expectRevert(bytes calldata) external;
+    // Expects the next emitted event. Params check topic 1, topic 2, topic 3 and data are the same.
+    function expectEmit(bool, bool, bool, bool) external;
+    // Mocks a call to an address, returning specified data.
+    // Calldata can either be strict or a partial match, e.g. if you only
+    // pass a Solidity selector to the expected calldata, then the entire Solidity
+    // function will be mocked.
+    function mockCall(address,bytes calldata,bytes calldata) external;
+    // Clears all mocked calls
+    function clearMockedCalls() external;
+    // Expect a call to an address with the specified calldata.
+    // Calldata can either be strict or a partial match
+    function expectCall(address,bytes calldata) external;
 }
 
 contract Hevm {
