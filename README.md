@@ -1,5 +1,7 @@
 # hevm
 
+> ⚠️ Not being actively maintained, you can replace this with [forge-std](https://github.com/brockelmore/forge-std)
+
 Easy to use forge lib with the HEVM cheatcodes contract.
 
 Docs for HEVM are here: https://github.com/gakonst/foundry/tree/master/forge
